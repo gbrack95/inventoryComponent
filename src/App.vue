@@ -279,158 +279,171 @@
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
-
+                  <!-- row buttons -->
                   <!--new item button -->
-                      <div>
-                          <v-dialog v-model="dialog" max-width="500px">
-                          <template v-slot:activator="{ on }">
-                              <v-layout justify-start row>
-                                  <v-flex xs2>
-                                      <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">New Item</v-btn>
-                                  </v-flex>
-                              </v-layout>
-                          </template>
-                          <v-card>
-                            <v-card-title>
-                                <h1> New Item </h1>
-                            </v-card-title>
+                  <v-layout row wrap>
 
-
-                            <v-card-text>
-                              <v-container grid-list-md>
-                                <v-layout wrap>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-select
-                                      v-model="newMarketplace"
-                                      label="MarketPlace"
-                                      :items="marketplaces"
-                                      >
-                                    </v-select>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="newImage" label="Image URL"></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="newTitle" label="Title"></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-select
-                                      v-model="newCategory"
-                                      label="Category"
-                                      :items="categories"
-                                      >
-                                    </v-select>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="newQuantity" label="Qty"></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="newCost" label="Cost"></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="newSku" label="SKU"></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="newLocation" label="Location"></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs12 sm6 md4>
-                                      <v-menu
-                                        ref="menu"
-                                        v-model="menu"
-                                        :close-on-content-click="false"
-                                        :nudge-right="40"
-                                        :return-value.sync="date"
-                                        lazy
-                                        transition="scale-transition"
-                                        offset-y
-                                        full-width
-                                        min-width="290px"
-                                      >
-                                        <template v-slot:activator="{ on }">
-                                          <v-text-field
-                                            v-model="date"
-                                            label="Start Date"
-                                            prepend-icon="event"
-                                            readonly
-                                            v-on="on"
-                                          ></v-text-field>
-                                        </template>
-                                        <v-date-picker v-model="date" no-title scrollable>
-                                          <v-spacer></v-spacer>
-                                          <v-text-field v-model="newTitle" label="Title"></v-text-field>
-                                          <v-spacer></v-spacer>
-                                          <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                                          <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                                        </v-date-picker>
-                                      </v-menu>
-                                  </v-flex>
+                    <v-flex xs2>
+                        <div>
+                            <v-dialog v-model="dialog" max-width="500px">
+                            <template v-slot:activator="{ on }">
+                                <v-layout justify-start row>
+                                    <v-flex xs2>
+                                        <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">New Item</v-btn>
+                                    </v-flex>
                                 </v-layout>
-                              </v-container>
-                            </v-card-text>
+                            </template>
+                            <v-card>
+                              <v-card-title>
+                                  <h1> New Item </h1>
+                              </v-card-title>
 
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="blue darken-1" flat @click="cancelnewitem()">Cancel</v-btn>
-                              <v-btn color="blue darken-1" flat @click="addItem()">Save</v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-dialog>
-                    </div>
 
-                <!-- CSV Upload -->
+                              <v-card-text>
+                                <v-container grid-list-md>
+                                  <v-layout wrap>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-select
+                                        v-model="newMarketplace"
+                                        label="MarketPlace"
+                                        :items="marketplaces"
+                                        >
+                                      </v-select>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-text-field v-model="newImage" label="Image URL"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-text-field v-model="newTitle" label="Title"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-select
+                                        v-model="newCategory"
+                                        label="Category"
+                                        :items="categories"
+                                        >
+                                      </v-select>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-text-field v-model="newQuantity" label="Qty"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-text-field v-model="newCost" label="Cost"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-text-field v-model="newSku" label="SKU"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                      <v-text-field v-model="newLocation" label="Location"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md4>
+                                        <v-menu
+                                          ref="menu"
+                                          v-model="menu"
+                                          :close-on-content-click="false"
+                                          :nudge-right="40"
+                                          :return-value.sync="date"
+                                          lazy
+                                          transition="scale-transition"
+                                          offset-y
+                                          full-width
+                                          min-width="290px"
+                                        >
+                                          <template v-slot:activator="{ on }">
+                                            <v-text-field
+                                              v-model="date"
+                                              label="Start Date"
+                                              prepend-icon="event"
+                                              readonly
+                                              v-on="on"
+                                            ></v-text-field>
+                                          </template>
+                                          <v-date-picker v-model="date" no-title scrollable>
+                                            <v-spacer></v-spacer>
+                                            <v-text-field v-model="newTitle" label="Title"></v-text-field>
+                                            <v-spacer></v-spacer>
+                                            <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                                          </v-date-picker>
+                                        </v-menu>
+                                    </v-flex>
+                                  </v-layout>
+                                </v-container>
+                              </v-card-text>
+
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" flat @click="cancelnewitem()">Cancel</v-btn>
+                                <v-btn color="blue darken-1" flat @click="addItem()">Save</v-btn>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
+                      </div>
+                    </v-flex>
+                    <v-flex xs2>
+                    <!-- CSV Upload -->
+
+                        <div>
+                            <v-dialog v-model="csvDialog" max-width="500px">
+                                <template v-slot:activator="{ on }">
+                                    <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">CSV Upload</v-btn>
+                                </template>
+                                <v-card>
+                                    <v-card-title>
+                                        <h1>CSV Upload</h1>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <vue-csv-import v-model="csv" :map-fields="['marketplace', 'image', 'title', 'category', 'qty', 'sku', 'location', 'cost']"></vue-csv-import>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                      <v-spacer></v-spacer>
+                                      <v-btn color="blue darken-1" flat @click="cancelCsvUpload()">Cancel</v-btn>
+                                      <v-btn color="blue darken-1" flat @click="sendData()">Upload</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </div>
+
+                    </v-flex>
+                    <v-flex xs2>
+                    <!-- Ebay Upload -->
 
                     <div>
-                        <v-dialog v-model="csvDialog" max-width="500px">
+                        <v-dialog v-model="ebayDialog" max-width="500px">
                             <template v-slot:activator="{ on }">
-                                <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">CSV Upload</v-btn>
+                                <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">Ebay Pull</v-btn>
                             </template>
                             <v-card>
                                 <v-card-title>
-                                    <h1>CSV Upload</h1>
+                                    <h1>Pull from Ebay</h1>
                                 </v-card-title>
                                 <v-card-text>
-                                    <vue-csv-import v-model="csv" :map-fields="['marketplace', 'image', 'title', 'category', 'qty', 'sku', 'location', 'cost']"></vue-csv-import>
+                                    <v-text-field v-model="ebayPullId" label="Item ID"></v-text-field>
                                 </v-card-text>
                                 <v-card-actions>
                                   <v-spacer></v-spacer>
-                                  <v-btn color="blue darken-1" flat @click="cancelCsvUpload()">Cancel</v-btn>
-                                  <v-btn color="blue darken-1" flat @click="sendData()">Upload</v-btn>
+                                  <v-btn color="blue darken-1" flat @click="cancelEbayUpload()">Cancel</v-btn>
+                                  <v-btn :disabled="loadingDialog" :loading="loadingDialog" color="blue darken-1" flat @click="ebayPull()">Submit</v-btn>
+                                  <v-dialog v-model="loadingDialog" hide-overlay persistent width="300">
+                                      <v-card color="primary" dark>
+                                          <v-card-text>
+                                              Creating...
+                                              <v-progress-linear indeterminate color="white" class="mb-0">
+                                              </v-progress-linear>
+                                          </v-card-text>
+                                      </v-card>
+                                  </v-dialog>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
                     </div>
+                    </v-flex>
+                    <v-flex xs6>
+                    </v-flex>
+                  </v-layout>
 
-                <!-- Ebay Upload -->
 
-                <div>
-                    <v-dialog v-model="ebayDialog" max-width="500px">
-                        <template v-slot:activator="{ on }">
-                            <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">Ebay Pull</v-btn>
-                        </template>
-                        <v-card>
-                            <v-card-title>
-                                <h1>Pull from Ebay</h1>
-                            </v-card-title>
-                            <v-card-text>
-                                <v-text-field v-model="ebayPullId" label="Item ID"></v-text-field>
-                            </v-card-text>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="blue darken-1" flat @click="cancelEbayUpload()">Cancel</v-btn>
-                              <v-btn :disabled="loadingDialog" :loading="loadingDialog" color="blue darken-1" flat @click="ebayPull()">Submit</v-btn>
-                              <v-dialog v-model="loadingDialog" hide-overlay persistent width="300">
-                                  <v-card color="primary" dark>
-                                      <v-card-text>
-                                          Creating...
-                                          <v-progress-linear indeterminate color="white" class="mb-0">
-                                          </v-progress-linear>
-                                      </v-card-text>
-                                  </v-card>
-                              </v-dialog>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </div>
+
 
                 <!-- Inventory List -->
                   <v-data-table
