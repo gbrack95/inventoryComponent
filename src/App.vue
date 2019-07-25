@@ -7,10 +7,18 @@
             <v-layout
               align-center>
                 <v-flex
-                  xs1>
+                  xs2>
                 </v-flex>
                 <v-flex
-                  xs10>
+                  xs8>
+                  <v-layout
+                      align-center
+                      justify-center
+                      wrap >
+                      <v-avatar class="IconOverlay" size="100px" color="blue darken-1">
+                        <v-icon size="75px" dark>person</v-icon>
+                      </v-avatar>
+                  </v-layout>
                   <v-card
                     height=400>
                     <v-container
@@ -19,6 +27,18 @@
                         align-center>
                         <v-flex xs2></v-flex>
                           <v-flex xs8>
+                          <h1><span class="font-weight-thin">Universal</span> <span>Inventory</span></h1>
+                          <h3> Member Login </h3>
+                          <v-alert
+                              v-model="errormessage"
+                              color="error"
+                              icon="warning"
+                              outline
+                              dark
+                              justify-center
+                            >
+                             Invalid Username or Password
+                            </v-alert>
                             <v-form>
                                 <v-text-field
                                   v-model="login_username"
@@ -38,6 +58,8 @@
                                 <v-layout
                                   justify-space-between>
                                   <v-btn
+                                    color="blue darken-1"
+                                    dark
                                     @click="login()"
                                     >login
                                   </v-btn>
@@ -50,6 +72,14 @@
                                             >register
                                           </v-btn>
                                         </template>
+                                        <v-layout
+                                              align-center
+                                              justify-center
+                                              wrap >
+                                            <v-avatar class="IconOverlay" size="100px" color="blue darken-1">
+                                             <v-icon size="75px" dark>person_add</v-icon>
+                                            </v-avatar>
+                                        </v-layout>
                                         <v-card>
                                           <v-card-title>
                                             <span class="headline">Register</span>
@@ -91,7 +121,7 @@
                       </v-container>
                     </v-card>
                 </v-flex>
-                <v-flex xs1></v-flex>
+                <v-flex xs2></v-flex>
             </v-layout>
           </v-container>
         </v-content>
@@ -740,6 +770,7 @@ export default {
   },
   data () {
     return {
+        errormessage: false,
         csv: null,
         todaysdate: new Date(),
         detail: "",
@@ -944,7 +975,7 @@ export default {
                 }
                 else if (response.status == 403) {
                     response.json().then(function(data) {
-                        alert(data.msg);
+                        app.errormessage = true;
                     })
                 }
             });
@@ -1309,5 +1340,20 @@ export default {
 
 .dashboard {
   background-color: white;
+}
+}
+.IconOverlay{
+  position: absolute;
+  top: 50px;
+  z-index: 1
+}
+
+.FormBackground{
+    background: rgb(94,53,177);
+    background: linear-gradient(100deg, rgba(94,53,177,1) 0%, rgba(30,136,229,1) 100%);
+
+}
+.errormessage{
+    color: #ff0600;
 }
 </style>
