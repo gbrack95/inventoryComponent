@@ -729,8 +729,8 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 import {VueCsvImport} from 'vue-csv-import';
-// const url = "https://codeschool-inventory-project.herokuapp.com";
-const url = "http://localhost:3000"
+const url = "https://codeschool-inventory-project.herokuapp.com";
+//const url = "http://localhost:3000"
 
 export default {
   name: 'App',
