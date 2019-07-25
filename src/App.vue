@@ -1,7 +1,7 @@
 <template>
     <div id="app" v-cloak>
       <v-app>
-        <v-content v-if="isLoggedIn == false">
+        <v-content v-if="isLoggedIn == false" class="FormBackground">
           <v-container
             fill-height>
             <v-layout
@@ -1341,7 +1341,7 @@ export default {
 .dashboard {
   background-color: white;
 }
-}
+
 .IconOverlay{
   position: absolute;
   top: 50px;
