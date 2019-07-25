@@ -370,6 +370,38 @@
                         </v-dialog>
                     </div>
 
+                <!-- Ebay Upload -->
+
+                <div>
+                    <v-dialog v-model="ebayDialog" max-width="500px">
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="blue darken-1" dark class="mb-2 " v-on="on">Ebay Pull</v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title>
+                                <h1>Pull from Ebay</h1>
+                            </v-card-title>
+                            <v-card-text>
+                                <v-text-field v-model="ebayPullId" label="Item ID"></v-text-field>
+                            </v-card-text>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="blue darken-1" flat @click="cancelEbayUpload()">Cancel</v-btn>
+                              <v-btn :disabled="loadingDialog" :loading="loadingDialog" color="blue darken-1" flat @click="ebayPull()">Submit</v-btn>
+                              <v-dialog v-model="loadingDialog" hide-overlay persistent width="300">
+                                  <v-card color="primary" dark>
+                                      <v-card-text>
+                                          Creating...
+                                          <v-progress-linear indeterminate color="white" class="mb-0">
+                                          </v-progress-linear>
+                                      </v-card-text>
+                                  </v-card>
+                              </v-dialog>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </div>
+
                 <!-- Inventory List -->
                   <v-data-table
                     :headers="headers"
@@ -697,7 +729,8 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 import {VueCsvImport} from 'vue-csv-import';
-const url = "https://codeschool-inventory-project.herokuapp.com";
+// const url = "https://codeschool-inventory-project.herokuapp.com";
+const url = "http://localhost:3000"
 
 export default {
   name: 'App',
@@ -719,6 +752,8 @@ export default {
         dialogRegister: false,
         dialogOrder: false,
         csvDialog: false,
+        ebayDialog: false,
+        loadingDialog: false,
         editing: [],
         order_editing: [],
         currentUser: "",
@@ -815,6 +850,7 @@ export default {
           newOrderQuantity: "",
           newOrderPrice: "",
           newOrderLocation: "",
+          ebayPullId: "",
 
           re_render: true,
         }
@@ -850,6 +886,30 @@ export default {
                     console.log(response);
                 });
             }
+        },
+        ebayPull: function() {
+            var app = this;
+            this.loadingDialog = true;
+            console.log("Input Ebay ID:", this.ebayPullId);
+            var req_body = {
+                sku: this.ebayPullId,
+            };
+            fetch(`${url}/ebay`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(req_body)
+            }).then(function(response){
+                console.log("Server endpoint client response:", response);
+                setTimeout(function(){
+                    app.loadingDialog = false;
+                    app.ebayDialog = false;
+                    app.getInventory();
+                    app.getOrder();
+                }, 2500);
+            });
         },
         newevent: function(){
             var app = this;
@@ -959,6 +1019,10 @@ export default {
         cancelCsvUpload: function(){
             this.csvDialog = false;
         },
+        cancelEbayUpload: function(){
+            this.ebayDialog = false;
+        },
+
         getInventory: function() {
             var app = this;
             console.log("Getting Inventory");
@@ -1223,5 +1287,27 @@ export default {
 .form-control {
     background-color: #F5F5F5;
     -webkit-appearance: menulist-button;
+}
+.my-event {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 2px;
+    background-color: #00C853;
+    color: #ffffff;
+    border: 1px solid #00C853;
+    width: 100%;
+    font-size: 12px;
+    padding: 3px;
+    cursor: pointer;
+    margin-bottom: 1px;
+  }
+
+.v-text-field__details {
+  display: none;
+}
+
+.dashboard {
+  background-color: white;
 }
 </style>
