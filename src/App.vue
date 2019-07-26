@@ -257,7 +257,7 @@
                                             <v-icon size="80px" left color="#8E24AA" class="mb-10" z-index="1">
                                                 local_shipping
                                             </v-icon>
-                                                Total Orders To Be Shipped
+                                                Total Orders To Be Shipped {{order.length}}
                                         </v-card-title>
                                       </v-card>
                                   </v-hover>
