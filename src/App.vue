@@ -168,16 +168,19 @@
                             >
                               <template v-slot:activator="{ on }">
                                 <v-flex xs6>
-                                  <v-card
-                                    v-on="on"
-                                  >
-                                      <v-card-title>
-                                          <v-icon size="80px" left color="#ff5252" class="mb-10" z-index="1">
-                                              insert_chart
-                                          </v-icon>
-                                              Total Inventory Items {{inventory.length}}
-                                      </v-card-title>
-                                  </v-card>
+                                    <v-hover>
+                                      <v-card slot-scope="{hover}"
+                                        :class="`elevation-${hover ? 15 : 2}`"
+                                        v-on="on"
+                                      >
+                                          <v-card-title>
+                                              <v-icon size="80px" left color="#ff5252" class="mb-10" z-index="1">
+                                                  insert_chart
+                                              </v-icon>
+                                                  Total Inventory Items {{inventory.length}}
+                                          </v-card-title>
+                                      </v-card>
+                                  </v-hover>
                                 </v-flex>
                               </template>
 
@@ -245,16 +248,19 @@
                             >
                               <template v-slot:activator="{ on }">
                                 <v-flex xs6 >
-                                  <v-card
-                                    v-on="on"
-                                  >
-                                    <v-card-title>
-                                        <v-icon size="80px" left color="#8E24AA" class="mb-10" z-index="1">
-                                            local_shipping
-                                        </v-icon>
-                                            Total Orders To Be Shipped
-                                    </v-card-title>
-                                  </v-card>
+                                    <v-hover>
+                                      <v-card slot-scope="{hover}"
+                                        :class="`elevation-${hover ? 15 : 2}`"
+                                        v-on="on"
+                                      >
+                                        <v-card-title>
+                                            <v-icon size="80px" left color="#8E24AA" class="mb-10" z-index="1">
+                                                local_shipping
+                                            </v-icon>
+                                                Total Orders To Be Shipped
+                                        </v-card-title>
+                                      </v-card>
+                                  </v-hover>
                                 </v-flex>
                               </template>
 
