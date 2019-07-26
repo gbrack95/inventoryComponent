@@ -156,57 +156,229 @@
                   </v-list>
 
               </v-navigation-drawer>
-              <v-container grid-list-lg fluid v-if="page == 'dashboard'">
-                  <h1> Dashboard </h1>
-                  <v-layout row>
-                      <v-flex xs6>
-                          <v-card>
-                              <v-card-title>
-                                  <v-icon size="80px" left color="#ff5252" class="mb-10" z-index="1">
-                                      insert_chart
-                                  </v-icon>
-                                      Total Inventory Items {{inventory.length}}
-                              </v-card-title>
-                          </v-card>
-                      </v-flex>
-                      <v-flex xs6>
-                          <v-card>
-                              <v-card-title>
-                                  <v-icon size="80px" left color="#FFEB3B" class="mb-10" z-index="1">
-                                      monetization_on
-                                  </v-icon>
-                                  Total Sales
-                              </v-card-title>
-                          </v-card>
-                      </v-flex>
-                  </v-layout>
-                  <v-layout row>
-                      <v-flex xs6>
-                          <v-card>
-                              <v-card-title>
-                                  <v-icon size="80px" left color="#8E24AA" class="mb-10" z-index="1">
-                                      local_shipping
-                                  </v-icon>
-                                      Total Orders To Be Shipped
-                              </v-card-title>
-                          </v-card>
-                      </v-flex>
-                      <!-- <v-flex xs6>
-                          <v-card>
-                              <v-card-title>
-                                  <v-icon size="80px" left color="#FFEB3B" class="mb-10" z-index="1">
-                                      monetization_on
-                                  </v-icon>
-                                  Total Sales
-                              </v-card-title>
-                          </v-card>
-                      </v-flex> -->
-                  </v-layout>
-                  <v-layout row>
+        <!-- Dashboard -->
+                    <v-container grid-list-lg fluid v-if="page == 'dashboard'">
+                        <h1> Dashboard </h1>
+                        <v-layout wrap>
+                          <!-- Inventory Dashboard Dialog-->
+                          <template>
+                            <v-dialog
+                              v-model="dialogThree"
+                              width="800"
+                            >
+                              <template v-slot:activator="{ on }">
+                                <v-flex xs6>
+                                  <v-card
+                                    v-on="on"
+                                  >
+                                      <v-card-title>
+                                          <v-icon size="80px" left color="#ff5252" class="mb-10" z-index="1">
+                                              insert_chart
+                                          </v-icon>
+                                              Total Inventory Items {{inventory.length}}
+                                      </v-card-title>
+                                  </v-card>
+                                </v-flex>
+                              </template>
 
-                      <v-flex xs12>
+                              <template>
+                                <v-layout>
+                                  <v-flex xs8 offset-xs2>
+                                    <v-card>
+                                      <v-container grid-list-xl fluid>
+                                        <h1> Inventory </h1>
+                                        <v-layout row wrap>
+                                          <v-flex
+                                            v-for="item in inventory"
+                                            :key="item"
+                                            xs4
+                                            d-flex
+                                          >
+                                            <v-badge
+                                              color="red"
+                                              right
+                                              overlap
+                                            >
+                                              <template v-slot:badge v-if="item.quantity <= 3">
+                                                <span>!</span>
+                                              </template>
+                                                <v-card>
+                                                  <v-img
+                                                    class="dashboard"
+                                                    :src="item.image"
+                                                    aspect-ratio="1.2"
+                                                    contain
+                                                  >
+                                                  <template v-slot:placeholder>
+                                                    <v-layout
+                                                      fill-height
+                                                      align-center
+                                                      justify-center
+                                                      ma-0
+                                                    >
+                                                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                                    </v-layout>
+                                                  </template>
+                                                </v-img>
+                                                <v-card-title>
+                                                    Marketplace: {{item.marketplace}}<br>
+                                                    Title: {{item.title}}<br>
+                                                    Quantity: {{item.quantity}}
+                                                </v-card-title>
+                                              </v-card>
+                                            </v-badge>
+                                          </v-flex>
+                                        </v-layout>
+                                      </v-container>
+                                    </v-card>
+                                  </v-flex>
+                                </v-layout>
+                              </template>
+                            </v-dialog>
+                          </template>
 
-                              <h1> Calendar <h2>{{todaysdate}}</h2></h1>
+                          <!-- Orders Dashboard Dialog -->
+                          <template>
+                            <v-dialog
+                              v-model="dialogFour"
+                              width="1000"
+                            >
+                              <template v-slot:activator="{ on }">
+                                <v-flex xs6 >
+                                  <v-card
+                                    v-on="on"
+                                  >
+                                    <v-card-title>
+                                        <v-icon size="80px" left color="#8E24AA" class="mb-10" z-index="1">
+                                            local_shipping
+                                        </v-icon>
+                                            Total Orders To Be Shipped
+                                    </v-card-title>
+                                  </v-card>
+                                </v-flex>
+                              </template>
+
+                              <template>
+                                <v-layout>
+                                  <v-flex xs8 offset-xs2>
+                                    <v-card>
+                                      <v-container grid-list-xl fluid>
+                                        <h1> Orders </h1>
+                                        <v-layout row wrap>
+                                          <v-flex
+                                            v-for="item in order"
+                                            :key="item"
+                                            xs4
+                                            d-flex
+                                          >
+                                                <v-card >
+                                                  <div v-if="item.status == 'processing'">
+                                                    <v-flex xs12 text-xs-center>
+                                                      <v-icon size="100px">
+                                                        sync
+                                                      </v-icon><br>
+                                                      {{item.status}}
+                                                    </v-flex>
+                                                    <v-card-title>
+                                                      Customer: {{item.customer}}
+                                                      Marketplace: {{item.marketplace}}<br>
+                                                      Title: {{item.title}}<br>
+                                                      Quantity: {{item.quantity}}
+                                                    </v-card-title>
+                                                  </div>
+                                                  <div v-if="item.status == 'pending'">
+                                                    <v-flex xs12 text-xs-center>
+                                                      <v-icon size="100px">
+                                                        timer
+                                                      </v-icon><br>
+                                                      {{item.status}}
+                                                    </v-flex>
+                                                    <v-card-title>
+                                                      Customer: {{item.customer}}
+                                                      Marketplace: {{item.marketplace}}<br>
+                                                      Title: {{item.title}}<br>
+                                                      Quantity: {{item.quantity}}
+                                                    </v-card-title>
+                                                  </div>
+                                                  <div v-if="item.status == 'packaging'">
+                                                    <v-flex xs12 text-xs-center>
+                                                      <v-icon size="100px">
+                                                        archive
+                                                      </v-icon><br>
+                                                      {{item.status}}
+                                                    </v-flex>
+                                                    <v-card-title>
+                                                      Customer: {{item.customer}}
+                                                      Marketplace: {{item.marketplace}}<br>
+                                                      Title: {{item.title}}<br>
+                                                      Quantity: {{item.quantity}}
+                                                    </v-card-title>
+                                                  </div>
+                                                  <div v-if="item.status == 'shipping'">
+                                                    <v-flex xs12 text-xs-center>
+                                                      <v-icon size="100px">
+                                                        local_shipping
+                                                      </v-icon><br>
+                                                      {{item.status}}
+                                                    </v-flex>
+                                                    <v-card-title>
+                                                      Customer: {{item.customer}}
+                                                      Marketplace: {{item.marketplace}}<br>
+                                                      Title: {{item.title}}<br>
+                                                      Quantity: {{item.quantity}}
+                                                    </v-card-title>
+                                                  </div>
+                                                  <div v-if="item.status == 'delivered'">
+                                                    <v-flex xs12 text-xs-center>
+                                                      <v-icon size="100px">
+                                                        check
+                                                      </v-icon><br>
+                                                      {{item.status}}
+                                                    </v-flex>
+                                                    <v-card-title>
+                                                      Customer: {{item.customer}}
+                                                      Marketplace: {{item.marketplace}}<br>
+                                                      Title: {{item.title}}<br>
+                                                      Quantity: {{item.quantity}}
+                                                    </v-card-title>
+                                                  </div>
+                                              </v-card>
+                                            </v-badge>
+                                          </v-flex>
+                                        </v-layout>
+                                      </v-container>
+                                    </v-card>
+                                  </v-flex>
+                                </v-layout>
+                              </template>
+                            </v-dialog>
+                          </template>
+
+
+                            <v-flex xs6 row wrap>
+                                <v-card>
+                                    <v-card-title>
+                                        <v-icon size="80px" left color="#FFEB3B" class="mb-10" z-index="1">
+                                            monetization_on
+                                        </v-icon>
+                                        Total Sales
+                                    </v-card-title>
+                                </v-card>
+                            </v-flex>
+
+                            <v-flex xs6 row wrap>
+                                <v-card>
+                                    <v-card-title>
+                                        <v-icon size="80px" left color="#14CC5B" class="mb-10" z-index="1">
+                                            settings
+                                        </v-icon>
+                                        Manage
+                                    </v-card-title>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+
+                              <h1> Calendar</h1><h2>{{todaysdate}}</h2>
 
                               <v-calendar v-if="re_render" color="#00C853">
                                   <template v-slot:day="{ date }">
@@ -633,6 +805,11 @@
                               <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="newOrderLocation" label="Location"></v-text-field>
                               </v-flex>
+                              <v-flex xs12 sm6 md4>
+                                <v-select v-model="newOrderStatus" label="Status"
+                                :items="statuses"></v-select>
+                              </v-flex>
+                        
                             </v-layout>
                           </v-container>
                         </v-card-text>
@@ -741,6 +918,14 @@
                           class="!text-field_details"
                          ></v-text-field>
                     </td>
+                    <td v-if="!order_editing[props.index].show">{{ props.item.status }}</td>
+                    <td v-else >
+                      <v-select 
+                        v-model="newOrderStatus" 
+                        label="Status"
+                        :items="statuses">
+                       </v-select>
+                    </td>
                     <td
                        class="layout"
                        v-if="!order_editing[props.index].show">
@@ -847,32 +1032,14 @@ export default {
         { text: 'MarketPlace', value: 'MarketPlace' },
         { text: 'Location', value: 'Location' },
         { text: 'Price', value: 'Price' },
+        { text: 'Status', value: 'status'},
         { text: 'Actions', value: 'name', sortable: false }
       ],
-        events: [
-            {
-              title: 'Vacation',
-              details: 'Going to the beach!',
-              date: '2019-07-12',
-              open: false
-            },
-            {
-              title: 'Vacation',
-              details: 'Going to the beach!',
-              date: '2019-07-11',
-              open: false
-            },
-            {
-              title: 'Vacation',
-              details: 'Going to the beach!',
-              date: '2019-07-15',
-              open: false
-            },
-        ],
         filteredItems: [],
         filteredOrders: [],
         marketplaces: [],
         marketplaceType: "all",
+        statuses: ["processing", "pending", "packaging", "shipping", "delivered"],
         categories: ["all", "shoe", "cooking", "books", "sports", "entertainment"],
         categoryType: "all",
 
@@ -894,6 +1061,7 @@ export default {
           newOrderQuantity: "",
           newOrderPrice: "",
           newOrderLocation: "",
+          newOrderStatus: "",
           ebayPullId: "",
 
           re_render: true,
@@ -928,6 +1096,8 @@ export default {
                     body: JSON.stringify(req_body)
                 }).then(function(response) {
                     console.log(response);
+                    app.csvDialog = false;
+                    app.getInventory();
                 });
             }
         },
@@ -1212,13 +1382,15 @@ export default {
                 marketplace: this.newOrderMarketplace,
                 quantity: this.newOrderQuantity,
                 price: this.newOrderPrice,
-                location: this.newOrderLocation
+                location: this.newOrderLocation,
+                status: this.newOrderStatus
             };
             fetch(`${url}/order`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify(req_body)
             }).then(function(response) {
                 if(response.status == 400) {
@@ -1234,6 +1406,7 @@ export default {
                     app.newOrderQuantity = "";
                     app.newOrderPrice = "";
                     app.newOrderLocation = "";
+                    app.newOrderStatus = "";
                     app.dialogOrder= false;
                     app.getOrder();
                 }
@@ -1244,7 +1417,8 @@ export default {
             console.log("Deleting order");
             confirm("Are you sure you want to delete this order?");
             fetch(`${url}/order/${order._id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                credentials: "include"
             }).then(function(response) {
                 if(response.json == 404) {
                     response.json().then(function(data) {
@@ -1266,10 +1440,12 @@ export default {
                 marketplace: order.marketplace,
                 quantity: order.quantity,
                 price: order.price,
-                location: order.location
+                location: order.location,
+                status: order.status
             };
             fetch(`${url}/order/${order._id}`, {
                 method: "PUT",
+                credentials: "include",
                 headers: {
                     "Content-type": "application/json"
                 },
