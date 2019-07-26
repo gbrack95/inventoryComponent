@@ -565,7 +565,7 @@
                                         <h1>CSV Upload</h1>
                                     </v-card-title>
                                     <v-card-text>
-                                        <vue-csv-import v-model="csv" :map-fields="['marketplace', 'image', 'title', 'category', 'qty', 'sku', 'location', 'cost']"></vue-csv-import>
+                                        <vue-csv-import v-model="csv" :map-fields="['marketplace', 'image', 'title', 'category', 'qty', 'sku', 'location', 'cost', 'date']"></vue-csv-import>
                                     </v-card-text>
                                     <v-card-actions>
                                       <v-spacer></v-spacer>
@@ -809,7 +809,7 @@
                                 <v-select v-model="newOrderStatus" label="Status"
                                 :items="statuses"></v-select>
                               </v-flex>
-                        
+
                             </v-layout>
                           </v-container>
                         </v-card-text>
@@ -920,8 +920,8 @@
                     </td>
                     <td v-if="!order_editing[props.index].show">{{ props.item.status }}</td>
                     <td v-else >
-                      <v-select 
-                        v-model="newOrderStatus" 
+                      <v-select
+                        v-model="newOrderStatus"
                         label="Status"
                         :items="statuses">
                        </v-select>
@@ -1085,7 +1085,7 @@ export default {
                     quantity: this.csv[item].qty,
                     cost: this.csv[item].cost,
                     location: this.csv[item].location,
-                    date: new Date().toISOString().substr(0, 10)
+                    date: this.csv[item].date
                 };
                 console.log(req_body);
                 fetch(`${url}/inventory`, {
